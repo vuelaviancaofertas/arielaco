@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CompGuide: Portal técnico informativo sobre arquitectura de computadoras, análisis de hardware y especificaciones de componentes.">
+    <title>CompGuide | Análisis de Hardware y Componentes</title>
+    
+    <style>
+        /* --- VARIABLES Y RESET --- */
+        :root {
+            --primary: #1a252f;      /* Gris oscuro azulado */
+            --secondary: #34495e;    /* Gris medio */
+            --accent: #2980b9;       /* Azul sobrio para enlaces/botones */
+            --bg-body: #fdfdfd;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* --- LAYOUT Y NAVEGACIÓN --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #bdc3c7;
+        }
+
+        /* --- FILTROS Y GRID --- */
+        .section-header {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--secondary);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .grid-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .card-body { padding: 25px; }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .btn-text {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: 2px solid transparent;
+        }
+
+        .btn-text:hover { border-bottom-color: var(--accent); }
+
+        /* --- SECCIÓN TÉCNICA (TABLA) --- */
+        .tech-specs {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th, td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: var(--secondary);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        td { font-size: 0.9rem; }
+
+        /* --- NEWSLETTER / CTA --- */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .cta-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-box h3 { margin-bottom: 15px; font-size: 1.8rem; }
+        .cta-box p { margin-bottom: 25px; opacity: 0.8; }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="email"] {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        button[type="submit"] {
+            padding: 12px 30px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #111;
+            color: #7f8c8d;
+            padding: 60px 0 30px;
+            font-size: 0.85rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 { color: #fff; margin-bottom: 20px; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 10px; }
+        .footer-col a { color: inherit; text-decoration: none; }
+        .footer-col a:hover { color: #fff; }
+
+        .legal-text {
+            text-align: center;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+
+        /* --- RESPONSIVIDAD --- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* En producción usar JS para toggle */
+            .hero h1 { font-size: 2rem; }
+            .form-row { flex-direction: column; }
+            .tech-specs { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">CompGuide</div>
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#articulos">Artículos</a></li>
+                    <li><a href="#comparativas">Comparativas</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h1>Ingeniería de Componentes</h1>
+            <p>Un recurso técnico dedicado a desglosar la arquitectura, rendimiento y especificaciones del hardware computacional moderno.</p>
+        </div>
+    </section>
+
+    <section class="container" id="articulos">
+        <div class="section-header">
+            <h2>Biblioteca de Hardware</h2>
+            <p>Seleccione una categoría para filtrar el contenido técnico.</p>
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterSelection('all')">Ver Todo</button>
+            <button class="filter-btn" onclick="filterSelection('cpu')">Procesadores (CPU)</button>
+            <button class="filter-btn" onclick="filterSelection('gpu')">Gráficos (GPU)</button>
+            <button class="filter-btn" onclick="filterSelection('ram')">Memoria (RAM)</button>
+            <button class="filter-btn" onclick="filterSelection('storage')">Almacenamiento</button>
+        </div>
+
+        <div class="grid-posts">
+            
+            <div class="card cpu">
+                <div class="card-body">
+                    <span class="tag">CPU / Arquitectura</span>
+                    <h3>Litografía: 5nm vs 7nm</h3>
+                    <p>Análisis de densidad de transistores y eficiencia energética. Cómo la reducción del nodo de proceso afecta el IPC y la disipación térmica en arquitecturas x86 y ARM.</p>
+                    <a href="#" class="btn-text">Leer análisis completo</a>
+                </div>
+            </div>
+
+            <div class="card cpu">
+                <div class="card-body">
+                    <span class="tag">CPU / Núcleos</span>
+                    <h3>Hyper-Threading y SMT</h3>
+                    <p>Explicación técnica sobre la duplicación de hilos de ejecución por núcleo físico y su impacto real en tareas de renderizado frente a gaming.</p>
+                    <a href="#" class="btn-text">Ver detalles</a>
+                </div>
+            </div>
+
+            <div class="card gpu">
+                <div class="card-body">
+                    <span class="tag">GPU / Rendering</span>
+                    <h3>Ray Tracing en Tiempo Real</h3>
+                    <p>Fundamentos del trazado de rayos por hardware. Diferencias entre núcleos RT dedicados y la rasterización tradicional.</p>
+                    <a href="#" class="btn-text">Profundizar</a>
+                </div>
+            </div>
+
+            <div class="card gpu">
+                <div class="card-body">
+                    <span class="tag">GPU / Memoria</span>
+                    <h3>VRAM: GDDR6 vs GDDR6X</h3>
+                    <p>Comparativa de ancho de banda y velocidades de reloj. La importancia del bus de memoria en resoluciones 4K.</p>
+                    <a href="#" class="btn-text">Ver comparativa</a>
+                </div>
+            </div>
+
+            <div class="card ram">
+                <div class="card-body">
+                    <span class="tag">Memoria / Estándar</span>
+                    <h3>Transición DDR4 a DDR5</h3>
+                    <p>Cambios en la gestión de energía (PMIC en el módulo), corrección de errores (ECC on-die) y duplicación de ancho de banda teórico.</p>
+                    <a href="#" class="btn-text">Leer especificaciones</a>
+                </div>
+            </div>
+
+            <div class="card storage">
+                <div class="card-body">
+                    <span class="tag">Almacenamiento / Protocolo</span>
+                    <h3>NVMe vs SATA III</h3>
+                    <p>Por qué el protocolo NVMe a través de PCIe elimina los cuellos de botella de la interfaz AHCI heredada de los discos mecánicos.</p>
+                    <a href="#" class="btn-text">Ver benchmarks</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="tech-specs" id="comparativas">
+        <div class="container">
+            <div class="section-header">
+                <h2>Velocidades de Interfaz PCIe</h2>
+                <p>Datos de referencia sobre el ancho de banda por carril (lane) en diferentes generaciones.</p>
+            </div>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Versión PCIe</th>
+                            <th>Año de Introducción</th>
+                            <th>Tasa de Transferencia (GT/s)</th>
+                            <th>Ancho de Banda x16 (GB/s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PCIe 3.0</td>
+                            <td>2010</td>
+                            <td>8 GT/s</td>
+                            <td>~32 GB/s</td>
+                        </tr>
+                        <tr>
+                            <td>PCIe 4.0</td>
+                            <td>2017</td>
+                            <td>16 GT/s</td>
+                            <td>~64 GB/s</td>
+                        </tr>
+                        <tr>
+                            <td>PCIe 5.0</td>
+                            <td>2019</td>
+                            <td>32 GT/s</td>
+                            <td>~128 GB/s</td>
+                        </tr>
+                        <tr>
+                            <td>PCIe 6.0 (Estándar)</td>
+                            <td>2022</td>
+                            <td>64 GT/s</td>
+                            <td>~256 GB/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container cta-box">
+            <h3>Boletín Semanal de Hardware</h3>
+            <p>Reciba resúmenes técnicos y whitepapers sobre las últimas innovaciones en semiconductores. Cero spam.</p>
+            <form class="form-row" onsubmit="event.preventDefault(); alert('Gracias por suscribirse. Esta es una demostración.');">
+                <input type="email" placeholder="Su correo electrónico profesional" required>
+                <button type="submit">Suscribirse</button>
+            </form>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>CompGuide</h4>
+                    <p>Plataforma educativa independiente sobre tecnología de computación.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Categorías</h4>
+                    <ul>
+                        <li><a href="#">Procesadores</a></li>
+                        <li><a href="#">Tarjetas Gráficas</a></li>
+                        <li><a href="#">Placas Base</a></li>
+                        <li><a href="#">Periféricos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Términos de Servicio</a></li>
+                        <li><a href="#">Política de Cookies</a></li>
+                        <li><a href="#">Descargo de Responsabilidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="legal-text">
+                <p>&copy; 2026 CompGuide. Todos los derechos reservados.</p>
+                <p style="font-size: 0.75rem; color: #555; margin-top: 10px;">Este sitio es meramente informativo. Las marcas mencionadas (Intel, AMD, NVIDIA, etc.) pertenecen a sus respectivos dueños.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lógica de Filtrado
+        function filterSelection(category) {
+            var cards = document.getElementsByClassName("card");
+            var btns = document.getElementsByClassName("filter-btn");
+
+            // 1. Manejar clases visuales de botones
+            for (var i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+                // Si el botón clicado contiene la categoría o es 'all'
+                if (event.target === btns[i]) {
+                    btns[i].classList.add("active");
+                }
+            }
+
+            // 2. Mostrar/Ocultar tarjetas
+            if (category == "all") category = "";
+            
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].style.display = "none";
+                if (cards[i].className.indexOf(category) > -1) {
+                    cards[i].style.display = "block";
+                    // Pequeña animación JS
+                    cards[i].animate([
+                        { opacity: 0, transform: 'translateY(10px)' },
+                        { opacity: 1, transform: 'translateY(0)' }
+                    ], {
+                        duration: 300,
+                        easing: 'ease-out'
+                    });
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
