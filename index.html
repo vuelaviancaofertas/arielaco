@@ -467,6 +467,13 @@
                     </ul>
                 </div>
                 <div class="footer-col">
+                    <h4>Contacto Técnico</h4>
+                    <ul>
+                        <li><a href="mailto:a1093063679@gmail.com">a1093063679@gmail.com</a></li>
+                        <li>Cra 80# 339 Cali, Valle del Cauca</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
                     <h4>Legal</h4>
                     <ul>
                         <li><a href="#">Política de Privacidad</a></li>
@@ -492,7 +499,6 @@
             // 1. Manejar clases visuales de botones
             for (var i = 0; i < btns.length; i++) {
                 btns[i].classList.remove("active");
-                // Si el botón clicado contiene la categoría o es 'all'
                 if (event.target === btns[i]) {
                     btns[i].classList.add("active");
                 }
@@ -505,7 +511,6 @@
                 cards[i].style.display = "none";
                 if (cards[i].className.indexOf(category) > -1) {
                     cards[i].style.display = "block";
-                    // Pequeña animación JS
                     cards[i].animate([
                         { opacity: 0, transform: 'translateY(10px)' },
                         { opacity: 1, transform: 'translateY(0)' }
